@@ -12,16 +12,30 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h3>${message }</h3>
-	<h1>새 직원 입력</h1>
-	<c:url value="/ex14/sub06" var="employeeUrl"></c:url>
-	<form action="${employeeUrl }" method="post">	<br />
-		First Name : <input type="text" name="firstName"/>	<br />
-		Last Name : <input type="text" name="lastName"/>	<br />
-		Birth Date : <input type="date" name="birthDate"/>	<br />
-		Photo : <input type="text" name="photo"/>	<br />
-		Notes : <textarea rows="10" cols="30" name="notes"></textarea>	<br />
-		<button>등록</button>
-	</form>
+	<h1>Employee LIST</h1>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Birth</th>
+				<th>Photo</th>
+				<th>Notes</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach items="${employees }" var="emp">
+				<tr>
+					<td>${emp.id }</td>
+					<td>${emp.firstName }</td>
+					<td>${emp.lastName }</td>
+					<td>${emp.birthDate }</td>
+					<td>${emp.photo }</td>
+					<td>${emp.notes }</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
 </body>
 </html>

@@ -1,14 +1,18 @@
 package org.zerock.controller.ex09;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.ex01.CustomerDto;
 import org.zerock.domain.ex01.EmployeeDto;
+import org.zerock.domain.ex01.PageInfoDto;
 import org.zerock.service.ex02.Ex04Service;
 
 @Controller
@@ -80,5 +84,50 @@ public class Ex14Controller {
 		}
 		
 		return "redirect:/ex14/sub06";
+	}
+	
+	@GetMapping("sub07")
+	public void employeeList(Model model) {
+		List<EmployeeDto> list = service.listEmployee();
+		
+		model.addAttribute("employees", list);
+	}
+	
+	@GetMapping("sub08")
+	public void customerList(Model model, @RequestParam(name="page", defaultValue = "1")int page) {
+		int  total = service.getTotal();
+		
+		int startPage = (page - 1) /10 * 10 + 1;
+		int endPage = startPage + 9;
+		int startRowNum = (page -1) * 10;
+		int lastPage = (total - 1) / 10 +1;
+		
+		List<CustomerDto> list = service.listCustomer(startRowNum);
+		model.addAttribute("customerList", list);
+		
+		endPage = Math.min(lastPage, endPage);
+		
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
+		model.addAttribute("prevPage", startPage - 10);
+		model.addAttribute("nextPage", startPage + 10);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("lastPage", lastPage);
+	}
+	
+	@GetMapping("sub09")
+	public void method09(@RequestParam(name="page", defaultValue = "1")int page, Model model) {
+		int rowPerPage = 5;
+		int totalRecords = service.getTotal();
+		int end = (totalRecords - 1) / rowPerPage + 1;
+		
+		List<CustomerDto> list = service.listCustomerPage(page, rowPerPage);
+		
+		PageInfoDto pageInfo = new PageInfoDto();
+		pageInfo.setCurrent(page);
+		pageInfo.setEnd(end);
+		
+		model.addAttribute("customerList", list);
+		model.addAttribute("pageInfo", pageInfo);		
 	}
 }

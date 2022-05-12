@@ -1,5 +1,7 @@
 package org.zerock.service.ex02;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zerock.domain.ex01.CustomerDto;
@@ -38,12 +40,25 @@ public class Ex04Service {
 	}
 
 	public boolean addEmployee(EmployeeDto employee) {
-		java.util.Date utilBirthDate = employee.getBirthDate();
-	    java.sql.Date sqlBirthDate = new java.sql.Date(utilBirthDate.getTime());
-	    employee.setBirthDate(sqlBirthDate);
 		int count = mapper.insertEmployee(employee);
 		return count == 1;
 	}
 	
+	public List<EmployeeDto> listEmployee() {
+		return mapper.listEmployee();
+	}
+	
+	public List<CustomerDto> listCustomer(int startNum) {
+		return mapper.listCustomer(startNum);
+	}
+
+	public int getTotal() {
+		return mapper.totalCustomer();
+	}
+
+	public List<CustomerDto> listCustomerPage(int page, int rowPerPage) {
+		int from = (page-1) * rowPerPage;
+		return mapper.listCustomerPage(from, rowPerPage);
+	}
 	
 }

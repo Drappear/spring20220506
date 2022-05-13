@@ -5,11 +5,9 @@ import java.time.LocalDateTime;
 import lombok.Data;
 
 @Data
-public class BoardDto {
+public class ReplyDto {
 	private int id;
-	private String title;
-	private String body;
+	private int boardId;	// board_id 컬럼과 매칭되기때문에 별칭 설정에 유의
+	private String content;
 	private LocalDateTime inserted;
-	
-	private int numOfReply;
 }

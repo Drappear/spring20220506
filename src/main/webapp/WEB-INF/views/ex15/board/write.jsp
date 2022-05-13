@@ -15,34 +15,18 @@
 	<div class="container">
 		<div class="row">
 			<div class="col">
+				<h1>글 작성</h1>
 				<c:url value="/ex15/board/write" var="writeLink"></c:url>
-				<h1><a href="${writeLink }">글 쓰기</a></h1>
-				<h1>글 목록</h1>
+				<form action="${writeLink }" method="post">
+					제목 :
+					<input type="text" name="title" value="새 제목" />
+					<br />
+					본문 :
+					<textarea name="body" id="" rows="10" cols="30"></textarea>
+					<br />
 
-				<table class="table">
-					<thead>
-						<tr>
-							<th>id</th>
-							<th>title</th>
-							<th>inserted</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${boardList }" var="board">
-							<tr>
-								<th>${board.id }</th>
-								<td>
-									<c:url value="/ex15/board/${board.id }" var="link"></c:url>
-									<a href="${link }">${board.title }</a>
-									<c:if test="${board.numOfReply > 0 }">
-										[${board.numOfReply }]
-									</c:if>
-								</td>
-								<td>${board.inserted }</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
+					<button class="btn btn-primary">등록</button>
+				</form>
 			</div>
 		</div>
 	</div>
